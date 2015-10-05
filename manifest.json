@@ -1,0 +1,38 @@
+{
+	"manifest_version": 2,
+	"name": "Iniciando v0.75",
+	"description": "Tentando comunicar entre VideoPop e YT",
+	"version": "0.75",
+	
+	"icons": { "16": "icon16.png",
+           	   "48": "icon48.png",
+          	   "128": "icon128.png" },
+	
+	"browser_action": {
+		"default_title": "Ferramentas",
+		"default_popup": "popup.html"
+	},
+	
+	"content_scripts": [{
+       	"matches": ["https://www.youtube.com/*"],
+		"run_at": "document_end",
+		"js": ["inject.js", "content_script.js", "notifications.js"]
+    }],
+	
+	"background": {
+        "scripts": ["background.js"],
+		"persistent": false
+    },
+	  
+	"permissions": [
+		"background",
+		"nativeMessaging",
+		"activeTab",
+		"tabs",
+		"webNavigation",
+		"notifications"
+	],
+	
+	"content_security_policy": 
+    "script-src 'self' https://www.youtube.com/player_api https://s.ytimg.com/yts/jsbin/www-widgetapi-vfl3zSWzk/www-widgetapi.js; object-src 'self'"
+}
