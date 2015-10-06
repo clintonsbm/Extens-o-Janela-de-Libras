@@ -20,16 +20,16 @@ var yourCustomJavaScriptCode = '' +
 // 	'chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {'+
 // 		'console.log("recebendo mensagem do backcground");'+
 // 
-// 		'if(tempoAntigoPop !== request.currentTimePop) {'+
-// 			// console.log(request);
-// 			// console.log(request.currentTime);
-// 			// console.log(tempoAntigo);
-// 			'var tempoAntigoPop = request.currentTimePop;'+
-// 			'ytplayer.seekTo(tempoAntigoPop);'+
-// 		'}'+
-// 		'else{'+
-// 			'console.log("mensagem recebida sem utilidade");'+
-// 		'}'+
+// 		// 'if(tempoAntigoPop !== request.currentTimePop) {'+
+// 		// 	// console.log(request);
+// 		// 	// console.log(request.currentTime);
+// 		// 	// console.log(tempoAntigo);
+// 		// 	'var tempoAntigoPop = request.currentTimePop;'+
+// 		// 	'ytplayer.seekTo(tempoAntigoPop);'+
+// 		// '}'+
+// 		// 'else{'+
+// 		// 	'console.log("mensagem recebida sem utilidade");'+
+// 		// '}'+
 // 
 // 		'if(request.statePop == "paused"){'+
 // 			'console.log("Devia ter pausado");'+
@@ -46,26 +46,45 @@ var code = document.createTextNode('(function() {' + yourCustomJavaScriptCode + 
 script.appendChild(code);
 (document.body || document.head).appendChild(script);
 
+function injectPlay(time){
+  var yourCustomJavaScriptCode = 'var ytplayer = document.getElementById("movie_player"); ytplayer.seekTo('+time+'); ytplayer.playVideo();';
+
+  var script = document.createElement('script');
+  var code = document.createTextNode('(function() {' + yourCustomJavaScriptCode + '})();');
+  script.appendChild(code);
+  (document.body || document.head).appendChild(script);
+}
+
+function injectPause(time){
+  var yourCustomJavaScriptCode = 'var ytplayer = document.getElementById("movie_player"); ytplayer.seekTo('+time+'); ytplayer.pauseVideo();';
+
+  var script = document.createElement('script');
+  var code = document.createTextNode('(function() {' + yourCustomJavaScriptCode + '})();');
+  script.appendChild(code);
+  (document.body || document.head).appendChild(script);
+}
+
+function injectTime(time){
+  var yourCustomJavaScriptCode = 'var ytplayer = document.getElementById("movie_player"); ytplayer.seekTo('+time+');';
+
+  var script = document.createElement('script');
+  var code = document.createTextNode('(function() {' + yourCustomJavaScriptCode + '})();');
+  script.appendChild(code);
+  (document.body || document.head).appendChild(script);
+}
+
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   console.log('recebendo mensagem de script injetado');
 
-  if (tempoAntigoPop !== requestPop.currentTime) {
-    // console.log(request);
-    // console.log(request.currentTime);
-    // console.log(tempoAntigo);
-    var tempoAntigoPop = request.currentTimePop;
-    ytplayer.seekTo(tempoAntigo);
-  } else {
-    console.log('mensagem recebida sem utilidade');
-  }
-  console.log(request.statePop);
+  injectTime(request.time);
+  
   if(request.statePop == "paused"){
     console.log("Devia ter pausado");
-    ytplayer.pauseVideo(); 
+    injectPause(request.time);
   }
   else{
     console.log("Devia ter continuado");
-    ytplayer.playVideo();  
+    injectPlay(request.time); 
   }
   return true;
 })

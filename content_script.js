@@ -16,8 +16,12 @@ window.addEventListener('message', function(event) {
   chrome.runtime.sendMessage("ilnofnedaekliinfocjnfkjmgkbkakne", message);
 });
 
-
+chrome.runtime.sendMessage({currentWindow: "true"});
 // chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 //   console.log("Recebeu algo"); 
 // })
 
+// chrome.tabs.query({currentWindow: true, active : true}, function(tabArray){
+//   window.postMessage({id: tabArray[0].id})
+//   console.log(tabArray[0].id);
+// })

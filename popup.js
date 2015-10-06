@@ -79,13 +79,13 @@ function createWindow(url){
 		                              'if(statePop == 1){'+
 			                             'console.log("playing");'+
 			                             //'window.postMessage({statePop: "playing"}, "*");'+
-                                         'chrome.runtime.sendMessage("ilnofnedaekliinfocjnfkjmgkbkakne", {statePop: "playing"});'+
+                                         'chrome.runtime.sendMessage({statePop: "playing", time: player.getCurrentTime()});'+
 		                              '}'+
 		                              'else{'+
 			                             'if(statePop == 2){'+
 				                            'console.log("paused");'+
 				                            //'window.postMessage({statePop: "paused"}, "*");'+
-                                            'chrome.runtime.sendMessage({statePop: "paused"});'+
+                                            'chrome.runtime.sendMessage({statePop: "paused", time: player.getCurrentTime()});'+
 			                             '}'+
 		                              '}'+
 		                              'console.log("Teoricamente mandou a mensagem");' +

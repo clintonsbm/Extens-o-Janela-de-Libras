@@ -27,17 +27,27 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 //     false;
 //   }
 // }
-  
 
+var tabId;
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
+  if(request.currentWindow == "true"){
+    chrome.tabs.query({
+      active: true,
+      currentWindow: true
+    }, function (array_of_Tabs) {
+      var tab = array_of_Tabs[0];
+      tabId = tab.id;
+      console.log(tabId);     
+    })
+  }
   if(request.statePop == "playing"){
     console.log("mandou mensagem de playing");
     //chrome.runtime.sendMessage("ilnofnedaekliinfocjnfkjmgkbkakne", {statePop: "playing"})
     request.statePop = "null";
      chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         console.log("Enviou mensagem do background para o script")
-        chrome.tabs.sendMessage(tabs[0].id, { statePop: "playing" });
+        chrome.tabs.sendMessage(tabId, { statePop: "playing", time: request.time });
      });
   }
   else{
@@ -46,7 +56,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
       //chrome.runtime.sendMessage("ilnofnedaekliinfocjnfkjmgkbkakne", {statePop: "paused"});
       chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         console.log("Enviou mensagem do background para o script")
-        chrome.tabs.sendMessage(tabs[0].id, { statePop: "paused" });
+        chrome.tabs.sendMessage(tabId, { statePop: "paused", time: request.time });
       });
       request.statePop = "null";
     }
