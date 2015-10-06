@@ -16,7 +16,7 @@
 	"content_scripts": [{
        	"matches": ["https://www.youtube.com/*"],
 		"run_at": "document_end",
-		"js": ["inject.js", "content_script.js", "notifications.js"]
+		"js": ["inject.js", "content_script.js", "notifications.js", "windowCreatedOnNotif.js"]
     }],
 	
 	"background": {

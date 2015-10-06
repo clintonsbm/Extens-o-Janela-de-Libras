@@ -9,14 +9,9 @@ function noticationCheckURL(){
     //console.log(url);
     for (var i = 0; i < meuVetorLinks.length; i++) {
         if (url == meuVetorLinks[i]) {
-            window.postMessage({notification: "true"}, "*");
+           chrome.runtime.sendMessage({notification: "true"});
             i = meuVetorLinks.length;
         }
     }
 }
-
-function callBack(){
-    
-}
-
 noticationCheckURL();
