@@ -9,10 +9,10 @@ var initialTime;
 
 var notificationIdvar = null;
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  console.log("recebendo mensagem no background");
-  console.log(request);
+  //console.log("recebendo mensagem no background");
+  //console.log(request);
   if(request.notification == "true"){
-    console.log("devia ter criado a notificação");
+    //console.log("devia ter criado a notificação");
     chrome.notifications.create("", opt, function (notificationId){ notificationIdvar = notificationId; console.log(notificationIdvar); });
   }
 })
@@ -56,7 +56,9 @@ var myWindow;
 function createWindow(url){
     for(var i = 0; i < meuVetorLinks.length; i++){
         if(url == meuVetorLinks[i]) {
-            myWindow = window.open('window_page.html', '', 'width=675, height=450, resizable=0');
+            myWindow = window.open('window_page.html', '', 'width=415, height=266, resizable=0');
+            myWindow.moveTo(890, 155);
+            myWindow.document.write('<html><head><title>Vídeo em libras</title></head><body onresize="testResize()"></body></html>');
             myWindow.document.write('<script src="window_page.js"></script>');
             myWindow.document.write('<div id="player"></div>');
             myWindow.document.write(''+
@@ -72,8 +74,8 @@ function createWindow(url){
                                     'var player;'+
                                     'function onYouTubeIframeAPIReady() {'+
                                         'player = new YT.Player("player", {'+
-                                            'height: "390",'+
-                                            'width: "640",'+
+                                            'height: "216",'+
+                                            'width: "385",'+
                                             'videoId: '+"'"+meuVetorIframes[i]+"'"+','+
                                             'events: {'+
                                                 '"onReady": onPlayerReady,'+
@@ -92,27 +94,27 @@ function createWindow(url){
                                   'function onPlayerStateChange() { ' +
 		                              'var statePop = player.getPlayerState();'+
 		                              'if(statePop == 1){'+
-			                             'console.log("playing");'+		                             
+			                             //'console.log("playing");'+		                             
                                    'chrome.runtime.sendMessage({statePop: "playing", time: player.getCurrentTime()});'+
 		                              '}'+
 		                              'else{'+
 			                             'if(statePop == 2){'+
-				                            'console.log("paused");'+
+				                            //'console.log("paused");'+
                                     'chrome.runtime.sendMessage({statePop: "paused", time: player.getCurrentTime()});'+
 			                             '}'+
 		                              '}'+
-		                              'console.log("Teoricamente mandou a mensagem");' +
+		                              //'console.log("Teoricamente mandou a mensagem");' +
 	                               '}'+
                                  'chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {'+
                                    'if(request.state == "paused"){'+
-                                     'console.log("Devia ter pausado");'+
+                                     //'console.log("Devia ter pausado");'+
                                      'player.pauseVideo();'+
                                      //'player.seekTo(request.currentTime);'+
                                      'request.state = null;'+
                                    '}'+
                                    'else {'+
                                     'if(request.state == "playing"){'+
-                                      'console.log("Devia ter continuado");'+
+                                      //'console.log("Devia ter continuado");'+
                                       //'player.seekTo(request.currentTime);'+
                                       'player.playVideo();'+
                                       'request.state = null;'+
@@ -158,20 +160,20 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
     })
   }
   if(request.statePop == "playing"){
-    console.log("mandou mensagem de playing");
+    //console.log("mandou mensagem de playing");
     //chrome.runtime.sendMessage("ilnofnedaekliinfocjnfkjmgkbkakne", {statePop: "playing"})
     request.statePop = "null";
      chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        console.log("Enviou mensagem do background para o script")
+        //console.log("Enviou mensagem do background para o script")
         chrome.tabs.sendMessage(tabId, { statePop: "playing", time: request.time });
      });
   }
   else{
     if(request.statePop == "paused"){
-      console.log("mandou mensagem de paused");
+      //console.log("mandou mensagem de paused");
       //chrome.runtime.sendMessage("ilnofnedaekliinfocjnfkjmgkbkakne", {statePop: "paused"});
       chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        console.log("Enviou mensagem do background para o script")
+        //console.log("Enviou mensagem do background para o script")
         chrome.tabs.sendMessage(tabId, { statePop: "paused", time: request.time });
       });
       request.statePop = "null";

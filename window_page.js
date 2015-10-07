@@ -1,6 +1,12 @@
-console.log('o JS rodou');
+function testResize(){
+	console.log("viu o resize");
+	var yourCustomJavaScriptCode = 'var w = window.innerWidth; var h = window.innerHeight; var player = document.getElementById("player"); player.width = w-10; player.height = h-10;';
 
-var id;
+  	var script = document.createElement('script');
+  	var code = document.createTextNode('(function() {' + yourCustomJavaScriptCode + '})();');
+  	script.appendChild(code);
+  	(document.body || document.head).appendChild(script);
+}
 
 // chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 //   console.log('recebendo mensagem de script injetado');

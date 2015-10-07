@@ -6,16 +6,16 @@ var yourCustomJavaScriptCode = '' +
 		'window.postMessage({currentTime: ytplayer.getCurrentTime()}, "*");' +
 		'var state = ytplayer.getPlayerState();'+
 		'if(state == 1){'+
-			'console.log("playing");'+
+			//'console.log("playing");'+
 			'window.postMessage({state: "playing"}, "*");'+
 		'}'+
 		'else{'+
 			'if(state == 2){'+
-				'console.log("paused");'+
+				//'console.log("paused");'+
 				'window.postMessage({state: "paused"}, "*");'+
 			'}'+
 		'}'+
-		'console.log("Teoricamente mandou a mensagem");' +
+		//'console.log("Teoricamente mandou a mensagem");' +
 	'});';
 
 var script = document.createElement('script');
@@ -51,17 +51,17 @@ function injectTime(time){
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  console.log('recebendo mensagem de script injetado');
+  //console.log('recebendo mensagem de script injetado');
 
   injectTime(request.time);
   
   if(request.statePop == "paused"){
-    console.log("Devia ter pausado");
+    //console.log("Devia ter pausado");
     injectPause(request.time);
   }
   else{
     if(request.statePop == "playing"){
-      console.log("Devia ter continuado");
+      //console.log("Devia ter continuado");
       injectPlay(request.time); 
     }
   }
