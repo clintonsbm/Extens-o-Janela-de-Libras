@@ -13,7 +13,7 @@ window.addEventListener('message', function(event) {
     return;
   }
   console.log("não deu erro");
-  chrome.runtime.sendMessage("ilnofnedaekliinfocjnfkjmgkbkakne", message);
+  chrome.runtime.sendMessage(message);
 });
 
 chrome.runtime.sendMessage({currentWindow: "true"});

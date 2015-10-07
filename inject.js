@@ -1,45 +1,22 @@
 var yourCustomJavaScriptCode = '' +
 	'var ytplayer = document.getElementById("movie_player"); ' +
-	'ytplayer.pauseVideo();';
-	// 'ytplayer.addEventListener("onStateChange", function() { ' +
-	// 	'window.postMessage({currentTime: ytplayer.getCurrentTime()}, "*");' +
-	// 	'var state = ytplayer.getPlayerState();'+
-	// 	'if(state == 1){'+
-	// 		'console.log("playing");'+
-	// 		'window.postMessage({state: "playing"}, "*");'+
-	// 	'}'+
-	// 	'else{'+
-	// 		'if(state == 2){'+
-	// 			'console.log("paused");'+
-	// 			'window.postMessage({state: "paused"}, "*");'+
-	// 		'}'+
-	// 	'}'+
-	// 	'console.log("Teoricamente mandou a mensagem");' +
-	// '});'+
-// 	'console.log("chegou aqui no inject.js");'+
-// 	'chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {'+
-// 		'console.log("recebendo mensagem do backcground");'+
-// 
-// 		// 'if(tempoAntigoPop !== request.currentTimePop) {'+
-// 		// 	// console.log(request);
-// 		// 	// console.log(request.currentTime);
-// 		// 	// console.log(tempoAntigo);
-// 		// 	'var tempoAntigoPop = request.currentTimePop;'+
-// 		// 	'ytplayer.seekTo(tempoAntigoPop);'+
-// 		// '}'+
-// 		// 'else{'+
-// 		// 	'console.log("mensagem recebida sem utilidade");'+
-// 		// '}'+
-// 
-// 		'if(request.statePop == "paused"){'+
-// 			'console.log("Devia ter pausado");'+
-// 			'ytplayer.pauseVideo();'+
-// 		'}'+
-// 		'else{'+
-// 			'console.log("Devia ter continuado");'+
-// 			'ytplayer.playVideo();'+
-// 		'}'+
-// 	'})';
+	'ytplayer.pauseVideo();'+
+  'window.postMessage({initialTimeForIframe: ytplayer.getCurrentTime()}, "*");' +
+	'ytplayer.addEventListener("onStateChange", function() { ' +
+		'window.postMessage({currentTime: ytplayer.getCurrentTime()}, "*");' +
+		'var state = ytplayer.getPlayerState();'+
+		'if(state == 1){'+
+			'console.log("playing");'+
+			'window.postMessage({state: "playing"}, "*");'+
+		'}'+
+		'else{'+
+			'if(state == 2){'+
+				'console.log("paused");'+
+				'window.postMessage({state: "paused"}, "*");'+
+			'}'+
+		'}'+
+		'console.log("Teoricamente mandou a mensagem");' +
+	'});';
 
 var script = document.createElement('script');
 var code = document.createTextNode('(function() {' + yourCustomJavaScriptCode + '})();');
@@ -83,8 +60,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     injectPause(request.time);
   }
   else{
-    console.log("Devia ter continuado");
-    injectPlay(request.time); 
+    if(request.statePop == "playing"){
+      console.log("Devia ter continuado");
+      injectPlay(request.time); 
+    }
   }
   return true;
 })

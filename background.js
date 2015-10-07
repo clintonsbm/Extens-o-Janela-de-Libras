@@ -5,8 +5,8 @@ var opt = {
     iconUrl: "icon.png"
 };
 
+var initialTime;
 
-//var not = undefined;
 var notificationIdvar = null;
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   console.log("recebendo mensagem no background");
@@ -53,10 +53,6 @@ function createPageUrl(url){
 
 var myWindow;
 
-chrome.notifications.onClicked.addListener(function(){
-  console.log("clicou");
-})
-
 function createWindow(url){
     for(var i = 0; i < meuVetorLinks.length; i++){
         if(url == meuVetorLinks[i]) {
@@ -85,38 +81,48 @@ function createWindow(url){
                                             '}'+
                                         '});'+
                                     '}'+
-      
+                                    
                                     'function onPlayerReady(event) {'+
-                                        'event.target.playVideo();'+
+                                        //'event.target.playVideo();'+                                      
                                         'event.target.pauseVideo();'+
+                                        //'event.target.seekTo('+initialTime+');'+
+                                        'event.target.playVideo();'+
                                     '}'+
-                                    'function onPlayerStateChange() { ' +
-		                              //'window.postMessage({currentTimePop: player.getCurrentTime()}, "*");' +
+                                  
+                                  'function onPlayerStateChange() { ' +
 		                              'var statePop = player.getPlayerState();'+
 		                              'if(statePop == 1){'+
-			                             'console.log("playing");'+
-			                             //'window.postMessage({statePop: "playing"}, "*");'+
-                                         'chrome.runtime.sendMessage({statePop: "playing", time: player.getCurrentTime()});'+
+			                             'console.log("playing");'+		                             
+                                   'chrome.runtime.sendMessage({statePop: "playing", time: player.getCurrentTime()});'+
 		                              '}'+
 		                              'else{'+
 			                             'if(statePop == 2){'+
 				                            'console.log("paused");'+
-				                            //'window.postMessage({statePop: "paused"}, "*");'+
-                                            'chrome.runtime.sendMessage({statePop: "paused", time: player.getCurrentTime()});'+
+                                    'chrome.runtime.sendMessage({statePop: "paused", time: player.getCurrentTime()});'+
 			                             '}'+
 		                              '}'+
 		                              'console.log("Teoricamente mandou a mensagem");' +
 	                               '}'+
+                                 'chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {'+
+                                   'if(request.state == "paused"){'+
+                                     'console.log("Devia ter pausado");'+
+                                     'player.pauseVideo();'+
+                                     //'player.seekTo(request.currentTime);'+
+                                     'request.state = null;'+
+                                   '}'+
+                                   'else {'+
+                                    'if(request.state == "playing"){'+
+                                      'console.log("Devia ter continuado");'+
+                                      //'player.seekTo(request.currentTime);'+
+                                      'player.playVideo();'+
+                                      'request.state = null;'+
+                                    '}'+            
+                                   '}'+
+                                 '})'+
                                     
                                     '</script>')
-            //myWindow.document.write('<iframe id="ytplayerPop" type="text/html" width="640" height="390" autoplay="1" src="http://www.youtube.com/embed/'+ meuVetorIframes[i] +'?version=3&enablejsapi=1&autoplay=1" frameborder="0"/>');
             
          }
-        else{
-            console.log('link nao esta presente no vetor');
-            console.log(url);
-            console.log(meuVetorLinks[i]);
-        }
     }
 }
 })
@@ -138,6 +144,9 @@ function createWindow(url){
 var tabId;
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse){
+  if(request.initialTimeForIframe){
+    initialTime = request.initialTimeForIframe;
+  }
   if(request.currentWindow == "true"){
     chrome.tabs.query({
       active: true,
