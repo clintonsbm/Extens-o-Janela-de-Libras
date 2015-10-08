@@ -1,8 +1,8 @@
 {
 	"manifest_version": 2,
-	"name": "Iniciando v0.75",
-	"description": "Focando no menu do PopUp",
-	"version": "0.75",
+	"name": "Janela de Libras",
+	"description": "Versão Alpha para demonstração e testes",
+	"version": "0.1",
 	
 	"icons": { "16": "icon16.png",
            	   "48": "icon48.png",
