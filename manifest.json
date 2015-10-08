@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Iniciando v0.75",
-	"description": "Tentando comunicar entre VideoPop e YT",
+	"description": "Focando no menu do PopUp",
 	"version": "0.75",
 	
 	"icons": { "16": "icon16.png",
