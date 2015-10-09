@@ -21,12 +21,12 @@ chrome.notifications.onClicked.addListener(function(){
 var meuVetorLinks = new Array('https://www.youtube.com/watch?v=asMaEu3-hf4',
                               'https://www.youtube.com/watch?v=IQXmrz5FB7E', 
                               'https://www.youtube.com/watch?v=eSvDP_C5z0A',
-                              'https://www.youtube.com/watch?v=KGZ5xhyOZg0');
+                              'https://www.youtube.com/watch?v=TxCnLlgJOYg&feature=youtu.be');
                                   
 var meuVetorIframes = new Array('asMaEu3-hf4',
                                 'IQXmrz5FB7E',
                                 'eSvDP_C5z0A',
-                                'sDeFhdkfCxk');
+                                '9pG7MTyUbxY');
 
 var tabId;
 var urlFromCurrentPage;
