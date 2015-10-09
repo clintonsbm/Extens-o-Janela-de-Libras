@@ -1,7 +1,8 @@
 var meuVetorLinks = new Array('https://www.youtube.com/watch?v=asMaEu3-hf4',
                               'https://www.youtube.com/watch?v=IQXmrz5FB7E', 
                               'https://www.youtube.com/watch?v=eSvDP_C5z0A',
-                              'https://www.youtube.com/watch?v=TxCnLlgJOYg&feature=youtu.be');
+                              'https://www.youtube.com/watch?v=TxCnLlgJOYg');
+                              
 
 function noticationCheckURL(){
     var url = window.location.href;

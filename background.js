@@ -21,7 +21,7 @@ chrome.notifications.onClicked.addListener(function(){
 var meuVetorLinks = new Array('https://www.youtube.com/watch?v=asMaEu3-hf4',
                               'https://www.youtube.com/watch?v=IQXmrz5FB7E', 
                               'https://www.youtube.com/watch?v=eSvDP_C5z0A',
-                              'https://www.youtube.com/watch?v=TxCnLlgJOYg&feature=youtu.be');
+                              'https://www.youtube.com/watch?v=TxCnLlgJOYg');
                                   
 var meuVetorIframes = new Array('asMaEu3-hf4',
                                 'IQXmrz5FB7E',
