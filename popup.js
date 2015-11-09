@@ -104,28 +104,27 @@
 // }
 
 
-//continuar daqui o handler para quando o botão for clicado
+//continuar daqui o handler para quando o botão for clicadoa
 document.addEventListener('DOMContentLoaded', function () {
   document.querySelector('button').addEventListener('click', buttonClicked);
 })
 
 function buttonClicked() {
-    // var meuVetorLinks = new Array('https://www.youtube.com/watch?v=asMaEu3-hf4',
-    //                           'https://www.youtube.com/watch?v=IQXmrz5FB7E', 
-    //                           'https://www.youtube.com/watch?v=eSvDP_C5z0A',
-    //                           'https://www.youtube.com/watch?v=KGZ5xhyOZg0');
-
-    // function noticationCheckURL(){
-    //     var url = window.location.href;
-    //     //URL da página atual
-    //     //console.log(url);
-    //     for (var i = 0; i < meuVetorLinks.length; i++) {
-    //         if (url == meuVetorLinks[i]) {
-    //             chrome.runtime.sendMessage({notification: "true"});
-    //             i = meuVetorLinks.length;
-    //         }
-    //     }
-    // }
-    
+//     var meuVetorLinks = new Array('https://www.youtube.com/watch?v=asMaEu3-hf4',
+//                                   'https://www.youtube.com/watch?v=IQXmrz5FB7E', 
+//                                   'https://www.youtube.com/watch?v=eSvDP_C5z0A',
+//                                   'https://www.youtube.com/watch?v=KGZ5xhyOZg0');
+// 
+// 
+//     var url = window.location.href;
+//     //URL da página atual
+//     console.log(url);
+//     for (var i = 0; i < meuVetorLinks.length; i++) {
+//       if (url == meuVetorLinks[i]) {
+//         chrome.runtime.sendMessage({ notification: "true" });
+//         i = meuVetorLinks.length;
+//       }
+//     }
+    chrome.runtime.sendMessage({buttonClicked: "true"});
     console.log("clicado");
 }

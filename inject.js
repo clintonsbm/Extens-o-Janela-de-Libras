@@ -2,16 +2,19 @@ var yourCustomJavaScriptCode = '' +
 	'var ytplayer = document.getElementById("movie_player"); ' +
 	'ytplayer.pauseVideo();'+
   'window.postMessage({initialTimeForIframe: ytplayer.getCurrentTime()}, "*");' +
+  'console.log(ytplayer.getCurrentTime());'+
 	'ytplayer.addEventListener("onStateChange", function() { ' +
 		'window.postMessage({currentTime: ytplayer.getCurrentTime()}, "*");' +
 		'var state = ytplayer.getPlayerState();'+
 		'if(state == 1){'+
 			//'console.log("playing");'+
+      'window.postMessage({initialTimeForIframe: ytplayer.getCurrentTime()}, "*");' +
 			'window.postMessage({state: "playing"}, "*");'+
 		'}'+
 		'else{'+
 			'if(state == 2){'+
 				//'console.log("paused");'+
+        'window.postMessage({initialTimeForIframe: ytplayer.getCurrentTime()}, "*");' +
 				'window.postMessage({state: "paused"}, "*");'+
 			'}'+
 		'}'+
